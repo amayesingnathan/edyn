@@ -9,3 +9,8 @@ out
 
 # macOS
 .DS_Store
+
+test/
+docs/
+cmake/
+examples/
