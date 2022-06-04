@@ -2,6 +2,9 @@
 .vscode
 .cache
 .vs
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
 
 # build
 build

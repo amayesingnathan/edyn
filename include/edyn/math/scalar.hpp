@@ -2,7 +2,6 @@
 #define EDYN_MATH_SCALAR_HPP
 
 #include <float.h>
-#include "edyn/build_settings.h"
 
 namespace edyn {
 

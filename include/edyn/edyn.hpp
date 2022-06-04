@@ -1,7 +1,6 @@
 #ifndef EDYN_EDYN_HPP
 #define EDYN_EDYN_HPP
 
-#include "edyn/build_settings.h"
 #include "comp/shared_comp.hpp"
 #include "comp/dirty.hpp"
 #include "comp/graph_node.hpp"
