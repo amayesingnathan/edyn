@@ -2,6 +2,7 @@
 #define EDYN_MATH_QUATERNION_HPP
 
 #include "vector3.hpp"
+#include "math.hpp"
 #include "constants.hpp"
 
 namespace edyn {
@@ -212,6 +213,38 @@ inline quaternion slerp(const quaternion &q0, const quaternion &q1, scalar s) no
         q0.z * s0 + q1.z * s1,
         q0.w * s0 + q1.w * s1
     };
+}
+
+inline scalar roll(const quaternion& q)
+{
+    scalar y = scalar(2) * (q.x * q.y + q.w * q.z);
+    scalar x = q.w * q.w + q.x * q.x - q.y * q.y - q.z * q.z;
+
+    if (all(equal({ x, y, scalar(0) }, { scalar(0), scalar(0), scalar(0) }, epsilon<scalar>()))) //avoid atan2(0,0) - handle singularity - Matiis
+        return 0;
+
+    return std::atan2(y, x);
+}
+
+inline scalar pitch(const quaternion& q)
+{
+    //return T(atan(T(2) * (q.y * q.z + q.w * q.x), q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z));
+    scalar y = scalar(2) * (q.y * q.z + q.w * q.x);
+    scalar x = q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z;
+
+    if (all(equal({ x, y, scalar(0) }, { scalar(0), scalar(0), scalar(0) }, epsilon<scalar>()))) //avoid atan2(0,0) - handle singularity - Matiis
+        return scalar(2) * atan2(q.x, q.w);
+    return atan2(y, x);
+}
+
+inline scalar yaw(const quaternion& q)
+{
+    return asin(clamp(scalar(-2) * (q.x * q.z - q.w * q.y), scalar(-1), scalar(1)));
+}
+
+inline vector3 eulerAngles(const quaternion& x)
+{
+    return vector3{ pitch(x), yaw(x), roll(x) };
 }
 
 // Integrate angular velocity over time.

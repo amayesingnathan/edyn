@@ -99,6 +99,49 @@ constexpr auto average(const std::array<T, N> &array) noexcept {
     return sum / N;
 }
 
+template<size_t L>
+inline constexpr bool any(std::array<bool, L> const& v)
+{
+    bool Result = false;
+    for (size_t i = 0; i < L; ++i)
+        Result = Result || v[i];
+    return Result;
+}
+
+template<size_t L>
+inline constexpr bool all(std::array<bool, L> const& v)
+{
+    bool Result = true;
+    for (size_t i = 0; i < L; ++i)
+        Result = Result && v[i];
+    return Result;
+}
+
+inline constexpr std::array<bool, 3> lessThanEqual(vector3 const& x, vector3 const& y)
+{
+    std::array<bool, 3> Result{true};
+    for (size_t i = 0; i < 3; ++i)
+        Result[i] = x[i] <= y[i];
+    return Result;
+}
+
+inline constexpr std::array<bool, 3> equal(vector3 const& x, vector3 const& y, vector3 const& Epsilon)
+{
+    return lessThanEqual(abs(x - y), Epsilon);
+}
+inline constexpr std::array<bool, 3> equal(vector3 const& x, vector3 const& y, scalar Epsilon)
+{
+    return equal(x, y, vector3{ Epsilon });
+}
+
+// clamp
+template<typename genType>
+inline constexpr genType clamp(genType x, genType minVal, genType maxVal)
+{
+    static_assert(std::numeric_limits<genType>::is_iec559 || std::numeric_limits<genType>::is_integer, "'clamp' only accept floating-point or integer inputs");
+    return std::min(std::max(x, minVal), maxVal);
+}
+
 }
 
 #endif // EDYN_MATH_MATH_HPP

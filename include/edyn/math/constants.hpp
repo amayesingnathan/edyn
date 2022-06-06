@@ -30,6 +30,13 @@ inline constexpr vector3 gravity_neptune = vector3_y * scalar(-11.15);
 inline constexpr vector3 gravity_pluto   = vector3_y * scalar(-0.62);
 inline constexpr vector3 gravity_moon    = vector3_y * scalar(-1.625);
 
+template<typename genType>
+inline constexpr genType epsilon()
+{
+    static_assert(std::numeric_limits<genType>::is_iec559, "'epsilon' only accepts floating-point inputs");
+    return std::numeric_limits<genType>::epsilon();
+}
+
 }
 
 #endif // EDYN_MATH_CONSTANTS_HPP
