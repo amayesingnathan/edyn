@@ -261,6 +261,17 @@ inline size_t max_index_abs(const vector3 &v) noexcept {
     return max_index(abs(v));
 }
 
+// degrees
+inline constexpr vector3 degrees(const vector3 &v) noexcept 
+{
+    return v * static_cast<scalar>(57.295779513082320876798154814105);
+}
+
+// radians
+inline constexpr vector3 radians(const vector3 &v) noexcept
+{
+    return v * static_cast<scalar>(0.01745329251994329576923690768489);
+}
 }
 
 #endif // EDYN_MATH_VECTOR3_HPP
